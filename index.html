@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>店家合作申請｜一頁式網站</title>
+  <meta name="description" content="提供店家合作申請、顧問聯繫、常見問題與快速填表流程的一頁式網站。" />
+  <meta property="og:title" content="店家合作申請｜一頁式網站" />
+  <meta property="og:description" content="填寫表單後將由專人協助您完成申請流程。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/og-cover.jpg" />
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #eefcf4;
+      --primary: #06c167; /* Uber Eats green */
+      --primary-dark: #000000; /* Uber Eats black */
+      --text: #0b0b0b;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --success: #16a34a;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eefcf4 0%, #ffffff 340px, #ffffff 100%);
+      line-height: 1.65;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 253, 248, 0.86);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .nav a:hover {
+      color: var(--primary);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .menu-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .topbar-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn,
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      background: linear-gradient(135deg, var(--primary), #039a52);
+      color: white;
+      box-shadow: 0 12px 24px rgba(6, 193, 103, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, #039a52, var(--primary-dark));
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .hero {
+      position: relative;
+      padding: 72px 0 48px;
+      background: url("./assets/background.png") center / cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.96) 0%,
+        rgba(255, 255, 255, 0.88) 44%,
+        rgba(255, 255, 255, 0.72) 100%
+      );
+      pointer-events: none;
+    }
+
+    .hero > .container {
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .hero-copy {
+      padding-top: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(6, 193, 103, 0.14);
+      color: #0b0b0b;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 4.8vw, 56px);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      margin: 0 0 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .form-card {
+      padding: 22px;
+    }
+
+    .form-card h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .form-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .required {
+      color: #dc2626;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font: inherit;
+      color: var(--text);
+      background: white;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(6, 193, 103, 0.16);
+    }
+
+    textarea {
+      min-height: 108px;
+      resize: vertical;
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      min-height: 22px;
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .status.error {
+      color: #dc2626;
+    }
+
+    section {
+      padding: 42px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 28px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.6vw, 40px);
+      line-height: 1.2;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .advisor {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .advisor-main,
+    .advisor-side {
+      padding: 26px;
+    }
+
+    .advisor-main h2,
+    .advisor-side h3 {
+      margin-top: 0;
+    }
+
+    .advisor-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .advisor-item {
+      display: flex;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      background: rgba(6, 193, 103, 0.08);
+      border: 1px solid rgba(6, 193, 103, 0.22);
+      border-radius: 16px;
+    }
+
+    .advisor-item strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .advisor-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .media-box {
+      border: 1px dashed #cbd5e1;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #f8fafc;
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      text-align: center;
+      padding: 16px;
+    }
+
+    .media-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .contact-box {
+      display: grid;
+      gap: 12px;
+      background: rgba(6, 193, 103, 0.08);
+      border: 1px solid rgba(6, 193, 103, 0.22);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .contact-box a {
+      color: var(--primary-dark);
+      font-weight: 800;
+      word-break: break-all;
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .testimonial {
+      padding: 22px;
+    }
+
+    .testimonial .testimonial-media {
+      display: block;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: zoom-in;
+    }
+
+    .testimonial img {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: contain;
+      border-radius: 14px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      background: #ffffff;
+      image-rendering: auto;
+    }
+
+    .testimonial .hint {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .zoomable-media {
+      display: block;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      border-radius: 14px;
+      cursor: zoom-in;
+    }
+
+    .media-box .zoomable-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+
+    .testimonial p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .testimonial strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    details {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 800;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details p {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 28px 0 60px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .floating-line {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 14px 18px;
+      border-radius: 999px;
+      box-shadow: 0 14px 28px rgba(6, 193, 103, 0.26);
+      font-weight: 900;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.72);
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      position: relative;
+      width: min(1100px, 100%);
+      max-height: min(86vh, 900px);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .lightbox-img {
+      width: 100%;
+      height: 100%;
+      max-height: 86vh;
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.2);
+      display: block;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      font-weight: 900;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .advisor,
+      .testimonials {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-copy {
+        padding-top: 0;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .menu-btn {
+        display: inline-flex;
+      }
+
+      .topbar-inner {
+        flex-wrap: wrap;
+      }
+
+      .topbar.open .nav {
+        display: grid;
+        flex: 0 0 100%;
+        order: 10;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(226, 232, 240, 0.95);
+        box-shadow: var(--shadow);
+      }
+
+      .topbar.open .nav a {
+        font-size: 15px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(6, 193, 103, 0.08);
+      }
+
+      .topbar.open .nav a:hover {
+        background: rgba(6, 193, 103, 0.14);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        min-height: 64px;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+
+      .hero-grid,
+      .form-grid,
+      .advisor,
+      .testimonials {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card,
+      .advisor-main,
+      .advisor-side,
+      .testimonial {
+        padding: 20px;
+      }
+
+      .floating-line {
+        right: 12px;
+        left: 12px;
+        justify-content: center;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top">
+        <span>申請成為Uber Eats合作店家</span>
+      </a>
+      <nav class="nav" id="topNav">
+        <a href="#benefits">合作優勢</a>
+        <a href="#process">申請流程</a>
+        <a href="#advisor">聯繫顧問</a>
+        <a href="#testimonials">顧客好評</a>
+        <a href="#faq">常見問題</a>
+      </nav>
+      <div class="topbar-actions">
+        <a class="btn btn-primary" href="#apply">立即申請</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="展開導覽" aria-expanded="false" aria-controls="topNav">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">全台線上申辦・專人協助</div>
+          <h2>申請成為 Uber Eats 合作店家<br /></h2>
+          <p class="lead">
+            實體門市、夜市攤販、行動餐車、雲端廚房皆可申請。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#apply">填寫申請表單</a>
+            <a class="btn btn-secondary" href="#advisor">查看聯繫方式</a>
+          </div>
+        </div>
+
+        <div class="card form-card" id="apply">
+          <h2>立即申請</h2>
+
+          <form id="leadForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">姓名 <span class="required">*</span></label>
+                <input id="name" name="name" type="text" placeholder="請輸入姓名" required />
+              </div>
+
+              <div class="field">
+                <label for="phone">聯絡電話 <span class="required">*</span></label>
+                <input id="phone" name="phone" type="tel" placeholder="請輸入電話" required />
+              </div>
+
+              <div class="field">
+                <label for="restaurantName">店家名稱</label>
+                <input id="restaurantName" name="restaurantName" type="text" placeholder="請輸入店家名稱" />
+              </div>
+
+              <div class="field">
+                <label for="email">Email <span class="required">*</span></label>
+                <input id="email" name="email" type="email" placeholder="請輸入 Email" required />
+              </div>
+
+              <div class="field full">
+                <label for="address">店家地址</label>
+                <input id="address" name="address" type="text" placeholder="請輸入店家地址" />
+              </div>
+
+              <div class="field">
+                <label for="lineId">LINE ID</label>
+                <input id="lineId" name="lineId" type="text" placeholder="請輸入 LINE ID" />
+              </div>
+
+              <div class="field">
+                <label for="businessType">店家型態</label>
+                <select id="businessType" name="businessType">
+                  <option value="">請選擇</option>
+                  <option>實體店面</option>
+                  <option>夜市攤販</option>
+                  <option>行動餐車</option>
+                  <option>雲端廚房</option>
+                  <option>其他</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="message">補充說明</label>
+                <textarea id="message" name="message" placeholder="可填寫營業時段、聯繫需求、方便聯繫時間等"></textarea>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit" style="width:100%; margin-top:16px;">立即聯絡</button>
+            <div id="formStatus" class="status" aria-live="polite"></div>
+            <div class="form-note">
+              按下送出即代表您同意提供資料作為聯繫與申請流程使用。實際上線與合作條件仍以最終審核與正式文件為準。
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="container">
+        <div class="section-heading">
+          <h2>現在加入有什麼好處？</h2>
+          <p>在外送平台曝光、增加品牌知名度、跨區觸及潛在客戶、提升營業額</p>
+        </div>
+
+        <div class="card" style="padding:22px; overflow:hidden;">
+          <img src="./assets/advantage.png" alt="六大核心優勢" />
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <div class="section-heading">
+          <h2>如何申辦UberEats?</h2>
+          <p>約7個工作天即可上線。</p>
+        </div>
+
+        <div class="card" style="padding:22px; overflow:hidden;">
+          <img src="./assets/工作流程附圖.png" alt="Uber Eats 申辦工作流程" />
+        </div>
+      </div>
+    </section>
+
+    <section id="advisor">
+      <div class="container advisor">
+        <div class="card advisor-main">
+          <h2>聯繫顧問</h2>
+          <p class="lead" style="font-size:16px; margin-bottom:0;">
+            Restaurant Partnership Executive
+          </p>
+
+          <div class="advisor-list">
+            <div class="advisor-item">
+              <div>📞</div>
+              <div>
+                <strong>聯絡電話</strong>
+                <span><a href="tel:0902674548">0902-674-548</a></span>
+              </div>
+            </div>
+            <div class="advisor-item">
+              <div>💬</div>
+              <div>
+                <strong>LINE ID</strong>
+                <span><a href="https://line.me/ti/p/ENyXSnwF3B" target="_blank" rel="noopener">0902674548（點此加入）</a></span>
+              </div>
+            </div>
+            <div class="advisor-item">
+              <div>✉️</div>
+              <div>
+                <strong>Email</strong>
+                <span><a href="mailto:bliang4@ext.uber.com">bliang4@ext.uber.com</a></span>
+              </div>
+            </div>
+            <div class="advisor-item">
+              <div>🧭</div>
+              <div>
+                <strong>服務說明</strong>
+                <span>全台可服務，協助店家準備資料並完成 Uber Eats 申請流程。</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card advisor-side">
+          <div>
+            <h3>名片</h3>
+            <div class="media-box">
+              <button class="zoomable-media" type="button" data-lightbox-src="./assets/business-card.jpg" data-lightbox-alt="顧問名片">
+                <img src="./assets/business-card.jpg" alt="顧問名片" loading="lazy" decoding="async" onerror="this.closest('.media-box').innerHTML='請將名片圖片放在 ./assets/business-card.jpg';" />
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h3>LINE QR Code</h3>
+            <div class="media-box">
+              <button class="zoomable-media" type="button" data-lightbox-src="./assets/line-qrcode.png" data-lightbox-alt="LINE QR Code">
+                <img src="./assets/line-qrcode.png" alt="LINE QR Code" loading="lazy" decoding="async" onerror="this.closest('.media-box').innerHTML='請將 LINE QR Code 圖片放在 ./assets/line-qrcode.png';" />
+              </button>
+            </div>
+          </div>
+          <div class="hint">點擊圖片可放大查看</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <div class="container">
+        <div class="section-heading">
+          <h2>顧客好評</h2>
+          <p>真實合作店家回饋，點擊圖片可放大查看</p>
+        </div>
+
+        <div class="testimonials">
+          <article class="card testimonial">
+            <button class="testimonial-media" type="button" data-lightbox-src="./assets/feedback1.jpg" data-lightbox-alt="顧客好評 1">
+              <img src="./assets/feedback1.jpg" alt="顧客好評 1" loading="lazy" decoding="async" />
+            </button>
+          </article>
+          <article class="card testimonial">
+            <button class="testimonial-media" type="button" data-lightbox-src="./assets/feedback2.jpg" data-lightbox-alt="顧客好評 2">
+              <img src="./assets/feedback2.jpg" alt="顧客好評 2" loading="lazy" decoding="async" />
+            </button>
+          </article>
+          <article class="card testimonial">
+            <button class="testimonial-media" type="button" data-lightbox-src="./assets/feedback3.jpg" data-lightbox-alt="顧客好評 3">
+              <img src="./assets/feedback3.jpg" alt="顧客好評 3" loading="lazy" decoding="async" />
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <h2>常見問題</h2>
+          <p>申請流程、費用與客服聯繫整理。</p>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>Q.平台費用怎麼算？會不會有額外費用？</summary>
+            <p>A.不收上架費或代辦費。平台合約與費率由 Uber Eats 依規定辦理；不同季度／行政區可能略有差異，我們會為商家擇優。</p>
+          </details>
+          <details>
+            <summary>Q.申辦 UberEats 餐廳需要多久時間？</summary>
+            <p>A.實際時程取決於 店家提供資料速度、系統審核 與 平板寄送；通常約 一週 可完成申請並進入上線準備（供參考，非保證）。</p>
+          </details>
+          <details>
+            <summary>Q.會被要求一定下廣告或做行銷嗎？</summary>
+            <p>A.不會。會有行銷團隊提供專業建議，是否採用由店家自由決定。</p>
+          </details>
+          <details>
+            <summary>Q.若平板無法修復，該如何申請更換？</summary>
+            <p>A.經客服判定線上支援無法解決時，將由客服視硬體狀況安排「平板交換」服務。新設備的交換作業預計需要 2-3 個工作天，請您耐心等候。</p>
+          </details>
+          <details>
+            <summary>Q.如何聯繫客服團隊</summary>
+            <p>A.Uber Eats 商家客服專線：<a href="tel:00801857210">0080-185-7210</a>（免付費專線），請留意電話開頭為0800。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>本站為 UberEats餐廳合作顧問 梁靜玲Bela Liang 之個人推廣網頁，非UberEats官方網站。</p>
+      <p>所有申請流程將引導至UberEats官方系統，最終審核權由 UberEats 官方為準。</p>
+      <p>© 2026 All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <a class="floating-line" href="https://line.me/ti/p/ENyXSnwF3B" target="_blank" rel="noopener">加入 LINE 洽詢</a>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="圖片預覽">
+      <button class="lightbox-close" type="button" id="lightboxClose" aria-label="關閉">✕</button>
+      <img class="lightbox-img" id="lightboxImg" alt="" />
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS5ZOmH1fOY1cU3k-Jef5xDaZdE-er3kpVDP9b3ttQq33w2ky4IIltPimi8vgfVLHt/exec';
+
+    const form = document.getElementById('leadForm');
+    const statusEl = document.getElementById('formStatus');
+
+    function setStatus(message, type = '') {
+      statusEl.textContent = message;
+      statusEl.className = `status ${type}`.trim();
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (APPS_SCRIPT_URL.includes('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+        setStatus('請先將 Apps Script Web App URL 填入 APPS_SCRIPT_URL。', 'error');
+        return;
+      }
+
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      payload.pageUrl = window.location.href;
+      payload.userAgent = navigator.userAgent;
+      payload.submittedAt = new Date().toISOString();
+
+      setStatus('送出中...');
+
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          form.reset();
+          setStatus('送出成功，將由專人盡快與您聯繫。', 'success');
+        } else {
+          setStatus(result.message || '送出失敗，請稍後再試。', 'error');
+        }
+      } catch (error) {
+        setStatus('送出失敗，請確認 Apps Script 已正確部署並允許存取。', 'error');
+        console.error(error);
+      }
+    });
+
+    // Topbar mobile menu
+    const topbar = document.querySelector('.topbar');
+    const menuBtn = document.getElementById('menuBtn');
+    const topNav = document.getElementById('topNav');
+
+    function setMenuOpen(open) {
+      if (!topbar || !menuBtn) return;
+      topbar.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuBtn.setAttribute('aria-label', open ? '收起導覽' : '展開導覽');
+    }
+
+    menuBtn?.addEventListener('click', () => {
+      const isOpen = topbar?.classList.contains('open');
+      setMenuOpen(!isOpen);
+    });
+
+    // Close menu after clicking nav links (mobile)
+    topNav?.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    // Click outside to close
+    document.addEventListener('click', (e) => {
+      if (!topbar?.classList.contains('open')) return;
+      if (topbar.contains(e.target)) return;
+      setMenuOpen(false);
+    });
+
+    // ESC to close (and don't conflict with lightbox)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && topbar?.classList.contains('open') && !lightbox?.classList.contains('open')) {
+        setMenuOpen(false);
+      }
+    });
+
+    // Lightbox for images
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    let lastActiveEl = null;
+
+    function openLightbox(src, alt = '') {
+      if (!lightbox || !lightboxImg) return;
+      lastActiveEl = document.activeElement;
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightboxClose?.focus?.();
+    }
+
+    function closeLightbox() {
+      if (!lightbox || !lightboxImg) return;
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+      lightboxImg.alt = '';
+      document.body.style.overflow = '';
+      lastActiveEl?.focus?.();
+      lastActiveEl = null;
+    }
+
+    document.querySelectorAll('[data-lightbox-src]').forEach(el => {
+      el.addEventListener('click', () => {
+        const src = el.getAttribute('data-lightbox-src');
+        const alt = el.getAttribute('data-lightbox-alt') || '';
+        if (src) openLightbox(src, alt);
+      });
+    });
+
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox?.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
